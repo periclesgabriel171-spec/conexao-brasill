@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conexão POA — Como o mundo afeta Porto Alegre</title>
+<meta name="theme-color" content="#050a16">
+<meta name="description" content="Clima e economia ao vivo, com a análise do que muda em Porto Alegre.">
+<meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Conexão POA">
+<meta property="og:title" content="Conexão POA — Como o mundo afeta Porto Alegre"><meta property="og:description" content="Clima e economia ao vivo, com a análise do que muda em Porto Alegre.">
+<meta property="og:url" content="__SITE__/"><meta property="og:image" content="__SITE__/img/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="alternate icon" href="favicon.ico"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Manrope:wght@400;600;700;800&display=swap">
+<style>
+:root{--bg:#050a16;--ink:#eaf4ff;--mut:#8fa3bd;--line:#ffffff1a;--g:#35e0a1;--r:#ff4d6a;--y:#ffb454;--cy:#5ef2ff;--up:#5ef2ff;--dn:#b58cff;--disp:'Unbounded','Arial Black',system-ui,sans-serif;--mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(800px 480px at 92% 0,#0d2b57 0,transparent 65%),var(--bg);color:var(--ink);font-family:Manrope,system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.55}
+body.lock{overflow:hidden}a{color:var(--cy);font-weight:700}
+.w{max-width:1120px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden}
+.hbg{position:absolute;inset:0 0 0 32%;background:#05070d;transform:translate3d(calc(var(--px,0)*-12px),calc(var(--sy,0)*.18px + var(--py,0)*-8px),0) scale(1.04);will-change:transform}
+.hbg video{display:block;width:100%;height:100%;object-fit:cover;object-position:60% 50%}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#050a16 0,#050a16 33%,#050a1640 54%,#050a1610 100%),linear-gradient(180deg,#050a1680,transparent 25%,transparent 55%,#050a16 98%)}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;background:repeating-linear-gradient(0deg,#ffffff08 0 1px,transparent 1px 4px);pointer-events:none}
+.hin{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;width:100%;padding-top:max(18px,env(safe-area-inset-top))}
+.bar{display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-size:.95rem;font-weight:700;letter-spacing:-.01em}.logo svg{width:32px;height:32px;flex:none}
+.live{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:#ffffff0d;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:99px;padding:6px 12px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--g);animation:p 1.6s infinite}@keyframes p{50%{opacity:.25}}
+.hc{margin-top:auto;padding:60px 0 30px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(2rem,7.4vw,5rem);line-height:1.04;letter-spacing:-.04em;margin:0}
+.sub{max-width:46ch;margin:18px 0 0;font-size:1.02rem;color:#c5d4ea}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:24px 0 16px}
+.cta{background:var(--cy);color:#03121c;text-decoration:none;font-weight:800;padding:13px 22px;border-radius:99px;transition:box-shadow .3s,transform .3s}.cta:hover{box-shadow:0 0 34px #5ef2ff88;transform:translateY(-2px)}
+.chip{display:flex;align-items:center;gap:9px;padding:11px 15px;border:1px solid var(--line);background:#ffffff0d;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:99px;font-size:.86rem;font-weight:600}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--g);box-shadow:0 0 12px var(--g)}.chip.hot i{background:var(--r);box-shadow:0 0 14px var(--r);animation:p 1s infinite}
+#st{color:var(--mut)}
+.tkw{position:relative;z-index:2;border-top:1px solid var(--line);background:#050a16b3;backdrop-filter:blur(8px);overflow:hidden;padding:11px 0}.tkw:has(.tk:empty){display:none}
+.tk{display:flex;width:max-content;animation:mq 80s linear infinite}.tk span{white-space:nowrap;font-size:.82rem;color:#c5d4ea}.tk span::after{content:"/";margin:0 22px;color:var(--cy)}@keyframes mq{to{transform:translateX(-50%)}}
+.nav{position:sticky;top:0;z-index:5;background:#050a16c7;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.f{display:flex;gap:8px;overflow-x:auto;padding:12px 20px;scrollbar-width:none;max-width:1120px;margin:0 auto}.f::-webkit-scrollbar{display:none}
+.c{flex:none;background:#ffffff0a;color:var(--ink);border:1px solid #ffffff33;border-radius:99px;padding:8px 16px;cursor:pointer;font:700 .8rem Manrope,system-ui,sans-serif}.c[aria-pressed=true]{background:var(--cy);color:#03121c;border-color:var(--cy)}
+.c:focus-visible,.mb:focus-visible,.cta:focus-visible,.x:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.sec{margin:46px 0 8px}
+.sh{height:210px;border-radius:26px;background-size:cover;display:flex;flex-direction:column;justify-content:space-between;padding:16px 20px 20px;margin-bottom:14px;border:1px solid var(--line)}
+.sh h2{margin:0;font-family:var(--disp);font-weight:600;font-size:clamp(1.3rem,5.4vw,2.2rem);line-height:1.12;letter-spacing:-.03em;max-width:18ch}
+.sh .mono{display:flex;justify-content:space-between;color:#cfe0f5}
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.k{position:relative;--led:#9a9aa6;background:linear-gradient(180deg,#ffffff10,#ffffff05);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .25s ease,box-shadow .25s ease;will-change:transform}
+.k[data-n=baixo]{--led:var(--g)}.k[data-n=medio]{--led:var(--y)}.k[data-n=alto]{--led:var(--r)}
+.k::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),#5ef2ff22,transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.k::after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:3px;border-radius:3px;background:var(--led);opacity:.35;transition:opacity .3s,box-shadow .3s}
+.k:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-4px);box-shadow:0 20px 50px #0008}.k:hover::before{opacity:1}.k:hover::after{opacity:1;box-shadow:0 0 18px 4px var(--led)}
+.m{font-family:var(--mono);font-size:.66rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}.esc{background:#5ef2ff26;color:var(--cy);border-radius:99px;padding:2px 8px;margin-right:6px}
+.k h3{margin:0;font-size:1.06rem;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ft{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;border-top:1px solid var(--line);padding-top:12px}
+.mb{background:none;border:0;color:var(--cy);font:800 .8rem Manrope,system-ui,sans-serif;cursor:pointer;padding:8px 0 8px 8px}
+.pend{font-family:var(--mono);font-size:.7rem;color:var(--mut)}
+.pa{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.6rem;color:var(--mut);line-height:1.25;text-transform:uppercase;white-space:pre-line}
+.anel{flex:none;width:46px;height:46px}.anel circle{fill:none;stroke-width:4.5}.anel .tr{stroke:#ffffff1f}.anel .vl{stroke:var(--g);stroke-linecap:round;transform:rotate(-90deg);transform-origin:22px 22px}
+.anel.medio .vl{stroke:var(--y)}.anel.alto .vl{stroke:var(--r)}.anel text{fill:var(--ink);font-size:12px;font-weight:700}
+.rv{opacity:0;translate:0 16px}.rv.in{opacity:1;translate:0 0}.sh.rv{transition:opacity .6s,translate .6s}.k.rv{transition:opacity .6s,translate .6s,transform .25s,box-shadow .25s}
+.ov{position:fixed;inset:0;background:#02060fb8;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:20;display:none;align-items:flex-end;justify-content:center}.ov.on{display:flex}
+.sheet{background:#0a1326;border:1px solid var(--line);border-radius:26px 26px 0 0;width:100%;max-width:640px;max-height:88vh;overflow-y:auto;padding:18px 20px 32px;animation:up .25s}@keyframes up{from{transform:translateY(40px);opacity:0}}
+.x{float:right;background:#ffffff14;border:1px solid var(--line);color:var(--ink);width:34px;height:34px;border-radius:50%;font-size:1rem;cursor:pointer}
+.sheet h3{margin:8px 0 4px;font-size:1.25rem;line-height:1.25}
+.chs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.ch{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;border:1px solid var(--up);color:var(--up);border-radius:99px;padding:2px 10px}.ch.desce{border-color:var(--dn);color:var(--dn)}.ch.incerto{border-color:var(--y);color:var(--y)}
+.sheet p{margin:8px 0;color:#b8c8de;font-size:.94rem}
+.b{border-left:4px solid var(--g);padding-left:12px;margin:16px 0}.b.e{border-left-color:var(--y)}.b p{color:var(--ink)}
+.b strong{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em}
+.er{display:flex;justify-content:space-between;font-weight:700;margin:12px 0 3px;font-size:.9rem}.ei{font-size:.8rem;color:var(--mut)}
+.bar2{height:7px;background:#ffffff1a;border-radius:9px;overflow:hidden;margin-bottom:3px}.bar2 i{display:block;height:100%;border-radius:9px;background:var(--up)}.bar2 i.desce{background:var(--dn)}.bar2 i.incerto{background:var(--y)}
+.nt{font-family:var(--mono);font-size:.62rem;color:var(--mut);margin:14px 0;text-transform:uppercase}
+.vz{text-align:center;color:var(--mut);padding:40px 0}
+footer{margin-top:48px;border-top:1px solid var(--line);padding:20px 0 40px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--mut)}
+@media(max-width:700px),(orientation:portrait){.hbg{inset:auto 0 auto 0;top:calc(env(safe-area-inset-top,0px) + 54px);aspect-ratio:4/3;transform:none;-webkit-mask-image:linear-gradient(180deg,#000 62%,transparent);mask-image:linear-gradient(180deg,#000 62%,transparent)}.hbg video{object-position:40% 50%}.hero::before{background:linear-gradient(180deg,#050a1680 0,#050a1600 14%,#050a1600 100%)}.hero::after{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.hbg{transform:none}.rv{opacity:1;translate:none}}
+#dia:empty{display:none}
+.dia{margin-top:28px;padding:24px 22px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,#5ef2ff22,#ffffff08 60%);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.dia>.mono{color:var(--cy)}.dia .m{margin:10px 0 0}
+.dia h2{font-family:var(--disp);font-weight:600;font-size:clamp(1.15rem,4.4vw,1.9rem);line-height:1.18;letter-spacing:-.03em;margin:8px 0 12px}
+.dia p{margin:0 0 18px;max-width:62ch;color:#c5d4ea}
+button.cta{border:0;cursor:pointer;font:800 1rem Manrope,system-ui,sans-serif}
+#ill{margin-top:22px}.ill{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))}
+.ill>div{display:flex;flex-direction:column;gap:6px;padding:16px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#ffffff10,#ffffff05)}
+.ill svg{width:30px;height:30px;fill:none;stroke:var(--cy);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.ill b{font-family:var(--disp);font-weight:600;font-size:.95rem}.ill span{font-size:.86rem;color:var(--mut)}
+.f .c:last-child{margin-left:auto}
+.hero::before,.hero::after{transition:opacity 1.4s ease}
+.hero .bar,.hero .tkw,.tkw{transition:opacity 1s ease}
+.hc>*{transition:opacity .9s ease,translate .9s ease}.hc>:nth-child(2){transition-delay:.15s}.hc>:nth-child(3){transition-delay:.3s}.hc>:nth-child(4){transition-delay:.45s}
+body.intro .hero::before,body.intro .hero::after,body.intro .hero .bar,body.intro .tkw{opacity:0}
+body.intro .hc>*{opacity:0;translate:0 22px}
+#skip{position:fixed;z-index:6;right:16px;top:calc(env(safe-area-inset-top,0px) + 14px);background:#ffffff14;color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:8px 14px;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+@media(prefers-reduced-motion:reduce){body.intro .hc>*{translate:none}}
+#tempo:empty{display:none}.wx{margin-top:22px;display:flex;flex-wrap:wrap;gap:16px 30px;align-items:center;padding:18px 22px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,#35e0a118,#ffffff08 60%);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.wt{display:flex;align-items:center;gap:12px}.wi{font-size:2.4rem;line-height:1}.wt b{font-family:var(--disp);font-size:2rem;letter-spacing:-.03em}.wt small{display:block;color:var(--mut)}
+.ws{display:flex;gap:22px;flex-wrap:wrap}.ws div{display:flex;flex-direction:column}.ws b{font-size:1.1rem}
+.vv{font:700 1.4rem var(--disp);font-style:normal;letter-spacing:-.03em}.vs{color:var(--mut);margin-top:-4px}.sheet .pend{display:block;margin:12px 0}
+</style></head><body>
+<button id="skip" class="mono">Pular</button>
+<header class="hero"><div class="hbg"><video id="iv" src="img/abertura.mp4" poster="img/abertura-ini.jpg" muted playsinline autoplay preload="auto"></video></div><div class="w hin">
+<div class="bar"><div class="logo"><svg viewBox="0 0 64 64"><defs><clipPath id="lc"><rect width="64" height="64" rx="14"/></clipPath></defs><g clip-path="url(#lc)"><rect width="64" height="22" fill="#00a550"/><rect y="21" width="64" height="22" fill="#d9262c"/><rect y="42" width="64" height="22" fill="#ffc72c"/><circle cx="32" cy="32" r="11" fill="#fff" stroke="#111" stroke-width="2.5"/><circle cx="32" cy="32" r="4.5" fill="#00a550"/></g></svg>Conexão·POA</div><div class="live mono"><span class="dot"></span>ao vivo</div></div>
+<div class="hc"><h1>O RS acontece.<br>Porto Alegre sente.</h1>
+<p class="sub">Clima do Brasil e do mundo ao vivo: frentes frias, furacões, tornados e mais. Economia em aba separada, sempre com o que muda em Porto Alegre.</p>
+<div class="row"><a class="cta" href="#nv">Ver ao vivo</a><div class="chip" id="al"><i></i><span>Conectando…</span></div></div>
+<span class="mono" id="st">Carregando…</span></div></div>
+<div class="tkw"><div class="tk" id="tk"></div></div><script>(()=>{const b=document.body,v=document.getElementById('iv'),sk=document.getElementById('skip'),fim='img/abertura-fim.jpg';
+b.classList.add('intro','lock');let d=0;
+const go=()=>{if(d)return;d=1;b.classList.remove('intro','lock');sk.remove()};
+const falha=()=>{v.poster=fim;v.removeAttribute('src');v.load();go()};
+v.addEventListener('ended',go);v.addEventListener('error',falha);
+sk.onclick=()=>{try{v.pause();v.currentTime=Math.max(0,v.duration-.05)}catch(e){}go()};
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){v.addEventListener('loadedmetadata',()=>{v.currentTime=Math.max(0,v.duration-.05);v.pause()});go()}
+else{const pl=v.play();if(pl&&pl.catch)pl.catch(falha)}
+setTimeout(go,7000)})();</script>
+</header>
+<div class="nav" id="nv"><div class="f" id="f"></div></div>
+<div class="w" id="tempo"></div>
+<div class="w" id="dia"></div>
+<div class="w" id="ill" hidden><div class="ill">
+<div><svg viewBox="0 0 24 24"><path d="M12 3v18M16 7.5c0-1.7-1.8-3-4-3s-4 1.3-4 3 1.8 3 4 3 4 1.3 4 3-1.8 3-4 3-4-1.3-4-3"/></svg><b>Dólar</b><em class="vv" id="v-dolar">…</em><small class="vs mono" id="s-dolar"></small><span>Muda o preço do que é importado e o ganho de quem exporta.</span></div>
+<div><svg viewBox="0 0 24 24"><path d="M4 19l5-6 4 3 7-9M15 7h5v5"/></svg><b>Juros (Selic)</b><em class="vv" id="v-selic">…</em><small class="vs mono" id="s-selic"></small><span>Encarecem o crédito e o financiamento de casas e empresas.</span></div>
+<div><svg viewBox="0 0 24 24"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg><b>Inflação (IPCA)</b><em class="vv" id="v-ipca">…</em><small class="vs mono" id="s-ipca"></small><span>Mede o custo de vida: mercado, aluguel e transporte.</span></div>
+<div><svg viewBox="0 0 24 24"><path d="M12 21V8M12 8c0-3 2-5 5-5 0 3-2 5-5 5zM12 13c0-3-2-5-5-5 0 3 2 5 5 5z"/></svg><b>Agro gaúcho</b><span>Soja, arroz e carne dependem do clima e das exportações.</span></div>
+</div></div>
+<main class="w" id="g"></main>
+<footer class="w mono"><span>Conexão·POA — Porto Alegre, RS</span><span>Análise automática (IA). Não é previsão nem recomendação de investimento.</span></footer>
+<div class="ov" id="ov"><div class="sheet" id="sh"></div></div>
+<script>
+const SUPABASE_URL="https://gefocuwupniynjvqasdw.supabase.co";
+const ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdlZm9jdXd1cG5peW5qdnFhc2R3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxNjA3MjcsImV4cCI6MjEwODczNjcyN30.VZmS2h2deEywbJvqtcrVRo2f7dulMPISJ83ezNrbpTs";
+const IMGS={economia:["img/globo.jpg","85% 40%"],regiao:["img/pessoas.jpg","40% 45%"],clima:["img/parede.jpg","50% 35%"],economia:["img/globo.jpg","85% 40%"],mundo:["img/parede.jpg","12% 40%"]};
+let dados=[],tema="clima";
+const SEC=[["clima","Clima no Brasil e no mundo"],["economia","Economia"]];
+const ABA={clima:"Clima",economia:"Economia"};
+function secaoDe(d){if(d.secao)return d.secao;if(d.tema==="Clima")return"clima";
+  if(["poa","rs"].includes(d.escopo)||["Porto Alegre","Rio Grande do Sul"].includes(d.tema))return"regiao";
+  if(["Mercados","Juros","Comércio","Energia"].includes(d.tema))return"economia";return"mundo"}
+const NS="http://www.w3.org/2000/svg";
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e};
+const sv=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+function anel(p,nivel){
+  const C=2*Math.PI*18,s=sv("svg",{viewBox:"0 0 44 44",class:"anel "+nivel}),v=sv("circle",{cx:22,cy:22,r:18,class:"vl"});
+  v.style.strokeDasharray=(C*p/100)+" "+C;const t=sv("text",{x:22,y:26,"text-anchor":"middle"});t.textContent=p+"%";
+  s.append(sv("circle",{cx:22,cy:22,r:18,class:"tr"}),v,t);return s}
+const HZ={curto:"Curto prazo",medio:"Médio prazo",longo:"Longo prazo"};
+const seta=d=>d==="sobe"?"↑":d==="desce"?"↓":"↔";
+const ESC={mundo:"🌍 Mundo",brasil:"🇧🇷 Brasil",rs:"RS",poa:"📍 Porto Alegre"};
+const quando=d=>document.createTextNode(d.fonte+" · "+new Date(d.publicado_em).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}));
+const meta=d=>{const m=el("div","m");if(ESC[d.escopo])m.append(el("span","esc",ESC[d.escopo]));m.append(quando(d));return m};
+const pad=n=>String(n).padStart(3,"0");
+let atual=null;
+function mostra(d,msg){atual=d;
+  const s=document.getElementById("sh");s.textContent="";
+  const x=el("button","x","✕");x.onclick=fecha;
+  s.append(x,meta(d),el("h3",null,d.titulo));if(msg)s.append(el("p","pend",msg));
+  if((d.efeitos||[]).length){const c=el("div","chs");d.efeitos.forEach(e=>c.append(el("span","ch "+e.direcao,e.indicador+" "+seta(e.direcao))));s.append(c)}
+  if(d.resumo)s.append(el("p",null,d.resumo));
+  const lp=d.portoalegre||d.brasil;
+  if(lp){const b=el("div","b");b.append(el("strong",null,"O que muda em Porto Alegre"),el("p",null,lp));s.append(b)}
+  if(d.economia){
+    const e=el("div","b e"),st=el("strong");st.append(el("span",null,"Impacto na economia de Porto Alegre"));
+    if(HZ[d.horizonte])st.append(el("span",null,"⏱ "+HZ[d.horizonte]));
+    e.append(st,el("p",null,d.economia));
+    (d.efeitos||[]).forEach(f=>{const r=el("div","er"),bar=el("div","bar2"),i=el("i",f.direcao);
+      r.append(el("span",null,f.indicador+" "+seta(f.direcao)),el("span",null,(f.forca||0)+"%"));i.style.width=(f.forca||0)+"%";bar.append(i);
+      e.append(r,bar,el("span","ei",f.motivo))});
+    s.append(e)}
+  if(d.portoalegre&&d.brasil)s.append(el("p",null,"Leitura nacional: "+d.brasil));
+  if(lp||d.economia)s.append(el("div","nt","Análise automática (IA) com estimativas qualitativas — não é previsão nem recomendação de investimento."));
+  const a=el("a",null,"[ Ler na fonte ↗ ]");a.href=d.link;a.target="_blank";a.rel="noopener";s.append(a);
+  document.getElementById("ov").classList.add("on");document.body.classList.add("lock")}
+async function abre(d){
+  const pronto=d.resumo||window.DEMO||!d.id;mostra(d,pronto?null:"⏳ Analisando com IA… leva alguns segundos.");if(pronto)return;
+  try{const r=await fetch("/.netlify/functions/detalhe?id="+d.id);if(!r.ok)throw 0;Object.assign(d,await r.json());if(atual===d&&document.getElementById("ov").classList.contains("on"))mostra(d)}
+  catch{if(atual===d)mostra(d,"A IA está ocupada agora. Feche e toque de novo em alguns instantes.")}}
+function fecha(){document.getElementById("ov").classList.remove("on");document.body.classList.remove("lock")}
+document.getElementById("ov").onclick=e=>{if(e.target.id==="ov")fecha()};
+addEventListener("keydown",e=>{if(e.key==="Escape")fecha()});
+function secao(g,titulo,lista,img,i,n){
+  const sec=el("section","sec"),sh=el("div","sh"),top=el("div","mono");
+  sh.style.backgroundImage="linear-gradient(90deg,#050a16f2,#050a1699 65%,#050a16aa),url("+img[0]+")";sh.style.backgroundPosition="center,"+img[1];
+  top.append(el("span",null,pad(i)+" — "+pad(n)),el("span",null,lista.length+(lista.length>1?" notícias":" notícia")));
+  sh.append(top,el("h2",null,titulo));
+  const gr=el("div","g");
+  lista.forEach(d=>{
+    const k=el("article","k"),ft=el("div","ft");
+    k.dataset.n=d.nivel||"";k.append(meta(d),el("h3",null,d.titulo));
+    if(d.intensidade==null&&!d.resumo){ft.append(el("span","pend","✨ análise ao tocar"))}
+    else if(d.intensidade!=null){const w=el("div","pa");w.append(anel(d.intensidade,d.nivel||"baixo"),el("span",null,"relevância\npara POA"));ft.append(w)}
+    const b=el("button","mb","[ Mais detalhes ]");b.onclick=()=>abre(d);ft.append(b);k.append(ft);gr.append(k)});
+  sec.append(sh,gr);g.append(sec)}
+function desenha(){
+  const g=document.getElementById("g");g.textContent="";
+  const S=SEC.filter(s=>tema==="todas"||tema===s[0]).map((s,i)=>[s[1],dados.filter(d=>secaoDe(d)===s[0]).slice(0,tema==="todas"?6:80),IMGS[s[0]]]).filter(s=>s[1].length);
+  if(!S.length){g.append(el("div","vz","Buscando as primeiras notícias. Volte em alguns minutos."));return}
+  S.forEach((s,i)=>secao(g,s[0],s[1],s[2],i+1,S.length));
+}
+function filtros(){const il=document.getElementById("ill");if(il)il.hidden=tema!=="economia";
+  const f=document.getElementById("f");f.textContent="";
+  Object.keys(ABA).forEach(t=>{
+    const b=el("button","c",ABA[t]);b.setAttribute("aria-pressed",t===tema);b.onclick=()=>{tema=t;filtros();desenha();scrollTo({top:document.querySelector(".nav").offsetTop,behavior:"smooth"})};f.append(b)});
+}
+async function carrega(){
+  try{
+    if(window.DEMO){dados=DEMO;filtros();desenha();document.getElementById("st").textContent="Modo demonstração · dados de exemplo";return}
+    const d24=Date.now()-24*3600*1000;
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/noticias?select=*&order=publicado_em.desc&limit=300`,{headers:{apikey:ANON_KEY,Authorization:"Bearer "+ANON_KEY}});
+    if(!r.ok)throw 0;const all=(await r.json()).filter(d=>!["descartada","regiao"].includes(d.secao)).map(d=>d.secao==="mundo"?{...d,secao:"economia"}:d),sc=x=>secaoDe(x),por={};
+    const nov=all.filter(d=>sc(d)==="clima"||new Date(d.publicado_em)>=d24);nov.forEach(d=>por[sc(d)]=(por[sc(d)]||0)+1);
+    const ext=all.filter(d=>!nov.includes(d)&&(por[sc(d)]||0)<4&&(por[sc(d)]=(por[sc(d)]||0)+1));
+    dados=[...nov,...ext].sort((a,b)=>new Date(b.publicado_em)-new Date(a.publicado_em));
+    const H={apikey:ANON_KEY,Authorization:"Bearer "+ANON_KEY};let ua="";
+    try{const rb=await fetch(`${SUPABASE_URL}/rest/v1/boletim?select=*&order=dia.desc&limit=1`,{headers:H}),bj=rb.ok?await rb.json():[];window.BOL=bj[0]&&Date.now()-new Date(bj[0].dia)<3*864e5?bj[0]:null}catch{}
+    try{const rs=await fetch(`${SUPABASE_URL}/rest/v1/status_busca?select=ultima_execucao&id=eq.1`,{headers:H}),sj=rs.ok?await rs.json():[];if(sj[0]){const mi=Math.max(0,Math.round((Date.now()-new Date(sj[0].ultima_execucao))/6e4));ua=" · busca automática há "+(mi<1?"menos de 1":mi)+" min"+(mi>15?" ⚠️ parece parada":"")}}catch{}
+    filtros();desenha();window.poaAlerta&&poaAlerta(dados);window.destaque&&destaque(dados);
+    document.getElementById("st").textContent=dados.length?nov.length+" notícias recentes"+(ext.length?" · +"+ext.length+" anteriores para não ficar vazio":"")+" · página atualizada às "+new Date().toLocaleTimeString("pt-BR")+ua:"Conectado. Aguardando a primeira busca automática.";
+  }catch{document.getElementById("st").textContent="Não foi possível carregar. Confira a URL e a chave do Supabase."}
+}
+const WMO=c=>c===0?["☀️","Céu limpo"]:c<=2?["⛅","Parcialmente nublado"]:c===3?["☁️","Nublado"]:c<=48?["🌫️","Neblina"]:c<=57?["🌦️","Garoa"]:c<=67?["🌧️","Chuva"]:c<=77||(c>=85&&c<=86)?["❄️","Neve"]:c<=82?["🌧️","Pancadas de chuva"]:["⛈️","Trovoada"];
+async function tempo(){const box=document.getElementById("tempo");
+  try{const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-30.03&longitude=-51.23&current=temperature_2m,wind_speed_10m,weather_code&daily=precipitation_probability_max,temperature_2m_max,temperature_2m_min&timezone=America%2FSao_Paulo&forecast_days=1");
+    if(!r.ok)throw 0;const j=await r.json(),c=j.current,d=j.daily,[ic,tx]=WMO(c.weather_code),w=el("div","wx"),t=el("div","wt"),q=el("div"),ws=el("div","ws");
+    q.append(el("b",null,Math.round(c.temperature_2m)+"°C"),el("small","mono","Porto Alegre agora · "+tx));t.append(el("span","wi",ic),q);
+    [["Chance de chuva hoje",(d.precipitation_probability_max[0]??"–")+"%"],["Vento",Math.round(c.wind_speed_10m)+" km/h"],["Mín / Máx",Math.round(d.temperature_2m_min[0])+"° / "+Math.round(d.temperature_2m_max[0])+"°"]].forEach(([a,b])=>{const x=el("div");x.append(el("span","m",a),el("b",null,b));ws.append(x)});
+    w.append(t,ws);box.textContent="";box.append(w)}catch{}}
+async function indic(){try{const r=await fetch("/.netlify/functions/indicadores");if(!r.ok)throw 0;const j=await r.json(),f=n=>n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}),
+  set=(k,v,t)=>{const a=document.getElementById("v-"+k),b=document.getElementById("s-"+k);if(a&&v){a.textContent=v;b.textContent=t}};
+  if(j.dolar){const v=j.dolar.antes?(j.dolar.valor/j.dolar.antes-1)*100:null;set("dolar","R$ "+f(j.dolar.valor),(v==null?"":(v>=0?"▲ ":"▼ ")+f(Math.abs(v))+"% · ")+"BCB "+j.dolar.data)}
+  if(j.selic)set("selic",f(j.selic.valor)+"% a.a.","Meta Copom · BCB "+j.selic.data);
+  if(j.ipca)set("ipca",f(j.ipca.valor)+"%","12 meses · BCB "+j.ipca.data)}catch{}}
+carrega();tempo();indic();if(!window.DEMO){setInterval(carrega,60000);setInterval(tempo,6e5);setInterval(indic,6e5)}
+</script><script>
+(()=>{
+const h=document.querySelector('.hero'),g=document.getElementById('g'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduce){addEventListener('scroll',()=>h.style.setProperty('--sy',Math.min(scrollY,innerHeight)),{passive:true});
+ h.addEventListener('pointermove',e=>{h.style.setProperty('--px',(e.clientX/innerWidth-.5).toFixed(3));h.style.setProperty('--py',(e.clientY/innerHeight-.5).toFixed(3))})}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.06});
+new MutationObserver(()=>g.querySelectorAll('.k:not(.rv),.sh:not(.rv)').forEach(x=>{x.classList.add('rv');io.observe(x)})).observe(g,{childList:true,subtree:true});
+const tilt=matchMedia('(hover:hover)').matches&&!reduce;
+g.addEventListener('pointermove',e=>{const k=e.target.closest('.k');if(!k)return;const b=k.getBoundingClientRect(),x=e.clientX-b.left,y=e.clientY-b.top;k.style.setProperty('--mx',x+'px');k.style.setProperty('--my',y+'px');if(tilt){k.style.setProperty('--ry',(x/b.width-.5)*7+'deg');k.style.setProperty('--rx',-(y/b.height-.5)*7+'deg')}});
+g.addEventListener('pointerout',e=>{const k=e.target.closest('.k');if(k&&!k.contains(e.relatedTarget)){k.style.setProperty('--rx','0deg');k.style.setProperty('--ry','0deg')}});
+window.destaque=d=>{const box=document.getElementById('dia');box.textContent='';
+ if(window.BOL){const B=window.BOL,w=el('div','dia');w.append(el('span','mono','Boletim do dia · '+B.dia.split('-').reverse().slice(0,2).join('/')),el('h2',null,B.titulo),el('p',null,B.texto),el('span','m','Resumo automático (IA) com dados do Open-Meteo e do Banco Central. Não é previsão nem recomendação de investimento.'));box.append(w);return}
+ if(!d.length)return;
+ const rec=d.filter(x=>new Date(x.publicado_em)>=Date.now()-864e5),pool=rec.length?rec:d;
+ const a=pool.filter(x=>x.intensidade!=null).sort((p,q)=>q.intensidade-p.intensidade)[0]||pool[0];
+ const w=el('div','dia'),b=el('button','cta','Ver análise completa');b.onclick=()=>abre(a);
+ w.append(el('span','mono','Notícia do dia'),meta(a),el('h2',null,a.titulo),el('p',null,a.portoalegre||a.brasil||a.resumo||'A análise para Porto Alegre está sendo preparada.'),b);box.append(w)};
+window.poaAlerta=d=>{const n=d.filter(x=>['regiao','clima'].includes(secaoDe(x))&&x.nivel==='alto').length,a=document.getElementById('al');
+ a.classList.toggle('hot',n>0);a.querySelector('span').textContent=n?n+(n>1?' alertas altos':' alerta alto')+' para Porto Alegre':'Sem alertas altos para Porto Alegre';
+ const t=document.getElementById('tk');t.textContent='';const L=d.slice(0,12).map(x=>x.titulo);[0,1].forEach(()=>L.forEach(x=>{const s=document.createElement('span');s.textContent=x;t.append(s)}))};
+})();
+</script></body></html>

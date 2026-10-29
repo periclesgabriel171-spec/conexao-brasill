@@ -1,0 +1,5 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+  # coloca o endereço real do site nas tags da prévia do WhatsApp (roda no deploy via GitHub)
+  command = 'sed -i "s|__SITE__|$URL|g" public/index.html'

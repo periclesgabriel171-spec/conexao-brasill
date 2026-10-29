@@ -130,7 +130,7 @@ setTimeout(go,7000)})();</script>
 const SUPABASE_URL="https://gefocuwupniynjvqasdw.supabase.co";
 const ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdlZm9jdXd1cG5peW5qdnFhc2R3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxNjA3MjcsImV4cCI6MjEwODczNjcyN30.VZmS2h2deEywbJvqtcrVRo2f7dulMPISJ83ezNrbpTs";
 const IMGS={economia:["img/globo.jpg","85% 40%"],regiao:["img/pessoas.jpg","40% 45%"],clima:["img/parede.jpg","50% 35%"],economia:["img/globo.jpg","85% 40%"],mundo:["img/parede.jpg","12% 40%"]};
-let dados=[],tema="clima";
+let dados=[],tema="clima",mais={};
 const SEC=[["clima","Clima no Brasil e no mundo"],["economia","Economia"]];
 const ABA={clima:"Clima",economia:"Economia"};
 function secaoDe(d){if(d.secao)return d.secao;if(d.tema==="Clima")return"clima";
@@ -172,12 +172,15 @@ function mostra(d,msg){atual=d;
   document.getElementById("ov").classList.add("on");document.body.classList.add("lock")}
 async function abre(d){
   const pronto=d.resumo||window.DEMO||!d.id;mostra(d,pronto?null:"⏳ Analisando com IA… leva alguns segundos.");if(pronto)return;
-  try{const r=await fetch("/.netlify/functions/detalhe?id="+d.id);if(!r.ok)throw 0;Object.assign(d,await r.json());if(atual===d&&document.getElementById("ov").classList.contains("on"))mostra(d)}
-  catch{if(atual===d)mostra(d,"A IA está ocupada agora. Feche e toque de novo em alguns instantes.")}}
+  const c=new AbortController(),tm=setTimeout(()=>c.abort(),30000);
+  try{const r=await fetch("/.netlify/functions/detalhe?id="+d.id,{signal:c.signal}),j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.erro||"erro "+r.status);
+    Object.assign(d,j);if(atual===d&&document.getElementById("ov").classList.contains("on"))mostra(d)}
+  catch(e){if(atual===d)mostra(d,"Não consegui analisar agora ("+(e.name==="AbortError"?"demorou demais":e.message).slice(0,140)+"). Feche e toque em Mais detalhes para tentar de novo.")}
+  finally{clearTimeout(tm)}}
 function fecha(){document.getElementById("ov").classList.remove("on");document.body.classList.remove("lock")}
 document.getElementById("ov").onclick=e=>{if(e.target.id==="ov")fecha()};
 addEventListener("keydown",e=>{if(e.key==="Escape")fecha()});
-function secao(g,titulo,lista,img,i,n){
+function secao(g,titulo,lista,img,i,n,extra){
   const sec=el("section","sec"),sh=el("div","sh"),top=el("div","mono");
   sh.style.backgroundImage="linear-gradient(90deg,#050a16f2,#050a1699 65%,#050a16aa),url("+img[0]+")";sh.style.backgroundPosition="center,"+img[1];
   top.append(el("span",null,pad(i)+" — "+pad(n)),el("span",null,lista.length+(lista.length>1?" notícias":" notícia")));
@@ -189,12 +192,14 @@ function secao(g,titulo,lista,img,i,n){
     if(d.intensidade==null&&!d.resumo){ft.append(el("span","pend","✨ análise ao tocar"))}
     else if(d.intensidade!=null){const w=el("div","pa");w.append(anel(d.intensidade,d.nivel||"baixo"),el("span",null,"relevância\npara POA"));ft.append(w)}
     const b=el("button","mb","[ Mais detalhes ]");b.onclick=()=>abre(d);ft.append(b);k.append(ft);gr.append(k)});
-  sec.append(sh,gr);g.append(sec)}
+  sec.append(sh,gr);if(extra)sec.append(extra);g.append(sec)}
 function desenha(){
   const g=document.getElementById("g");g.textContent="";
-  const S=SEC.filter(s=>tema==="todas"||tema===s[0]).map((s,i)=>[s[1],dados.filter(d=>secaoDe(d)===s[0]).slice(0,tema==="todas"?6:80),IMGS[s[0]]]).filter(s=>s[1].length);
+  const pt=d=>(d.intensidade??35)-(Date.now()-new Date(d.publicado_em))/36e5*.5; // relevância menos o "peso" da idade
+  const S=SEC.filter(s=>tema==="todas"||tema===s[0]).map(s=>{const t=dados.filter(d=>secaoDe(d)===s[0]).sort((a,b)=>pt(b)-pt(a)),ab=mais[s[0]],b=t.length>5?el("button","cta",ab?"Mostrar só as 5 principais":"Ver todas ("+t.length+")"):null;
+    if(b){b.style.marginTop="16px";b.onclick=()=>{mais[s[0]]=!ab;desenha()}}return[s[1],ab?t:t.slice(0,5),IMGS[s[0]],b]}).filter(s=>s[1].length);
   if(!S.length){g.append(el("div","vz","Buscando as primeiras notícias. Volte em alguns minutos."));return}
-  S.forEach((s,i)=>secao(g,s[0],s[1],s[2],i+1,S.length));
+  S.forEach((s,i)=>secao(g,s[0],s[1],s[2],i+1,S.length,s[3]));
 }
 function filtros(){const il=document.getElementById("ill");if(il)il.hidden=tema!=="economia";
   const f=document.getElementById("f");f.textContent="";

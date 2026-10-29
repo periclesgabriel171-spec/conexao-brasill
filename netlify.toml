@@ -1,5 +1,10 @@
 [build]
   publish = "public"
   functions = "netlify/functions"
-  # coloca o endereço real do site nas tags da prévia do WhatsApp (roda no deploy via GitHub)
-  command = 'sed -i "s|__SITE__|$URL|g" public/index.html'
+  command = '''
+  mkdir -p public/img netlify/functions
+  for f in index.html favicon.ico favicon.svg apple-touch-icon.png; do if [ -f "$f" ]; then mv "$f" public/; fi; done
+  for f in *.jpg *.mp4; do if [ -f "$f" ]; then mv "$f" public/img/; fi; done
+  for f in *.mjs; do if [ -f "$f" ]; then mv "$f" netlify/functions/; fi; done
+  sed -i "s|__SITE__|$URL|g" public/index.html || true
+  '''

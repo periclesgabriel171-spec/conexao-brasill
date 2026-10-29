@@ -24,9 +24,12 @@ const RE_ESPORTE = /futebol|palmeiras|corinthians|flamengo|gr[eê]mio|\bInter\b|
 const RE_POLICIA = /\b(PM|PMs|PRF|PF)\b|pol[ií]cia|\bpres[oa]s?\b|assalt|homic[ií]dio|assassin|tiroteio|furto|latroc|feminic|estupr|sequestr|atropel|esfaquead|baleado|morto a tiros/i;
 const RE_TEMPO = /el ni[nñ]o|la ni[nñ]a|clima|clim[aá]tic|chuva|temporal|temporais|tempestade|enchente|inunda|alagamento|cheia|ciclone|furac[aã]o|tornad|onda de frio|nevasca|mon[cç][aã]o|tropical (storm|depression|cyclone)|snow|cold front|tuf[aã]o|granizo|vendaval|estiagem|seca\b|onda de calor|calor|frio|geada|neve|massa de ar|frente fria|previs[aã]o do tempo|temperatura|nevoeiro|ressaca|defesa civil|alerta (de|para)|queimada|inc[eê]ndio florestal|aquecimento global|\bCOP\d+|deslizamento|climate|hurricane|typhoon|drought|flood|heatwave|wildfire|storm|rainfall/i;
 const RE_ECON = /econom|infla[cç][aã]o|\bIPCA\b|\bIGP|selic|juros|copom|banco central|\bBC\b|d[oó]lar|c[aâ]mbio|\bPIB\b|ibovespa|bolsa de valores|\bB3\b|mercado financeiro|petr[oó]leo|petrobras|commodit|exporta|importa|tarifa|balan[cç]a comercial|safra|soja|trigo|milho|arroz|agroneg|agropecu[aá]ria|frete|combust[ií]vel|gasolina|diesel|energia el[eé]trica|desemprego|emprego|sal[aá]rio m[ií]nimo|renda|cr[eé]dito|d[ií]vida p[uú]blica|fiscal|or[cç]amento|imposto|tribut|\bFed\b|\bBCE\b|\bFMI\b|\bOCDE\b|\bOMC\b|\bOpep\b|recess[aã]o|varejo|ind[uú]stria|supermercado|cesta b[aá]sica|custo de vida|aluguel|financiamento|invest|lucro|faturamento|mercado|a[cç][oõ]es|bitcoin|guerra comercial|san[cç][oõ]es|embargo|ormuz|mar vermelho|ucr[aâ]nia|oriente m[eé]dio|taiwan|inflation|interest rate|central bank|tariff|\boil\b|trade war|economy|stocks|\bGDP\b|recession|sanctions|markets?/i;
+const RE_POLIT = /\beleit[oa]s?\b|candidat|vereador|deputad|senador|prefeit|bolsonar|\bSTF\b|\bTCU\b|partido|agredid|assessor|delat|corrup/i;
+const RE_FORTE = /econom|infla[cç]|selic|juros|d[oó]lar|\bPIB\b|ibovespa|petr[oó]leo|bolsa|banco central|combust|safra|tarifa|imposto|chuva|temporal|enchente|clima|el ni[nñ]o/i;
 export const relevante = (n, grupo) => {
   const tx = n.titulo + " " + (n.desc || "").slice(0, 160);
   if (RE_ESPORTE.test(n.titulo)) return false;
+  if (RE_POLIT.test(n.titulo) && !RE_FORTE.test(n.titulo)) return false; // política/crime sem efeito econômico
   const tempo = RE_TEMPO.test(tx);
   if (RE_POLICIA.test(n.titulo) && !tempo) return false;
   return grupo === "clima" ? tempo : (tempo || RE_ECON.test(tx));
@@ -77,17 +80,21 @@ intensidade (inteiro de 0 a 100: relevância estimada desta notícia para Porto 
 efeitos (lista de 3 a 4 objetos {indicador, direcao, forca, motivo}: indicador = Custo de vida, Dólar, Juros, Emprego, Comércio, Indústria, Agro gaúcho, Exportações, Turismo ou Bolsa; direcao = "sobe", "desce" ou "incerto" (o que acontece com esse indicador EM PORTO ALEGRE); forca = inteiro de 0 a 100; motivo em até 14 palavras).
 Não recomende investimentos e não invente números, datas ou estatísticas: intensidade e forca são estimativas qualitativas.`;
 
-async function gemini(prompt) {
+async function gemini(prompt, ms = 20000) {
+  // thinkingBudget 0 = sem "pensar" antes de responder: bem mais rápido (o padrão do 2.5-flash demorava 15-30s)
+  const corpo = (rapido) => JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: "application/json", ...(rapido ? { thinkingConfig: { thinkingBudget: 0 } } : {}) } });
+  const chama = (m, rapido) => fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${GEMINI_API_KEY}`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: corpo(rapido), signal: AbortSignal.timeout(ms) });
   let r, txt = "";
-  for (const m of [GEMINI_MODEL, "gemini-flash-latest"]) { // se o modelo padrão não existir mais, tenta o "latest"
-    r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${GEMINI_API_KEY}`, {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: "application/json" } }),
-    });
-    if (r.ok) break;
-    txt = await r.text();
-    if (r.status !== 404) break;
-  }
+  try {
+    for (const m of [GEMINI_MODEL, "gemini-flash-latest"]) { // se o modelo padrão não existir mais, tenta o "latest"
+      r = await chama(m, true);
+      if (r.status === 400) r = await chama(m, false); // modelo que não aceita desligar o "pensar"
+      if (r.ok) break;
+      txt = await r.text();
+      if (r.status !== 404) break;
+    }
+  } catch (e) { throw new Error(e.name === "TimeoutError" ? "Gemini demorou demais" : e.message); }
   if (!r.ok) throw new Error("Gemini " + r.status + " " + txt.slice(0, 200));
   const j = await r.json();
   return JSON.parse(j.candidates[0].content.parts[0].text);
@@ -96,7 +103,7 @@ async function gemini(prompt) {
 // Analisa várias manchetes em UM pedido ao Gemini (economiza o limite grátis). Devolve [[notícia, análise], ...]
 export async function analisarLote(lista) {
   const itens = lista.map((n, i) => `${i + 1}) "${n.titulo}" — trecho: "${(n.descricao || "").slice(0, 400)}"`).join("\n");
-  const j = await gemini(`${CONTEXTO}\nNotícias:\n${itens}\nResponda SÓ em JSON, em português do Brasil: uma LISTA com um objeto por notícia, na mesma ordem, cada objeto com a chave n (número da notícia) e as chaves:\n${CAMPOS}`);
+  const j = await gemini(`${CONTEXTO}\nNotícias:\n${itens}\nResponda SÓ em JSON, em português do Brasil: uma LISTA com um objeto por notícia, na mesma ordem, cada objeto com a chave n (número da notícia) e as chaves:\n${CAMPOS}`, lista.length > 1 ? 25000 : 9000);
   const arr = Array.isArray(j) ? j : (Object.values(j).find(Array.isArray) || [j]);
   return lista.map((p, i) => [p, arr.find((x) => x && +x.n === i + 1) || arr[i]]);
 }
@@ -176,7 +183,7 @@ export default async (opts) => {
     pend.sort((a, b) => (ordem[a.secao] ?? 2) - (ordem[b.secao] ?? 2)); pend.splice((opts && opts.porRodada) || POR_RODADA);
     try { if (pend.length) for (const [p, a] of await analisarLote(pend)) if (a && await gravar(p, a)) ok++; }
     catch (e) { ERROS.push(e.message); console.log("erro análise em lote", e.message); }
-    try { bol = await boletim(opts && opts.forcar); } catch (e) { bol = "boletim: ERRO"; ERROS.push(e.message); }
+    if (!(opts && opts.forcar) || !pend.length) try { bol = await boletim(opts && opts.forcar); } catch (e) { bol = "boletim: ERRO"; ERROS.push(e.message); }
   }
   const msg = `feeds: ${novas.length} nas últimas 48h · ${salvo} · descartadas: ${limpas} · analisadas agora: ${ok}/${pend.length} · ${bol}${ERROS.length ? " · ERROS: " + [...new Set(ERROS)].join(" | ").slice(0, 400) : ""}`;
   console.log(msg); return msg;
